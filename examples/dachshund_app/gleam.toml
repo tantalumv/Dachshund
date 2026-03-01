@@ -7,7 +7,7 @@ target = "javascript"
 [dependencies]
 gleam_stdlib = ">= 0.45.0 and < 2.0.0"
 lustre = ">= 5.0.0 and < 6.0.0"
-dachshund = ">= 0.1.0 and < 1.0.0"
+dachshund = { path = "../../packages/dachshund" }
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
