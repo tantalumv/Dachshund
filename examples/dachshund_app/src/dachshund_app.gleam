@@ -210,8 +210,8 @@ fn dark_mode_toggle(model: Model) -> Element(Msg) {
     [
       h.img([
         attr.src(case model.dark_mode {
-          Light -> "/moon-svgrepo-com.svg"
-          Dark -> "/sun-svgrepo-com.svg"
+          Light -> "./moon-svgrepo-com.svg"
+          Dark -> "./sun-svgrepo-com.svg"
         }),
         attr.alt(case model.dark_mode {
           Light -> "Moon icon"
@@ -311,7 +311,7 @@ fn hero_section(model: Model) -> Element(Msg) {
   h.section([attr.class("mb-16")], [
     h.div([attr.class("hero-layout")], [
       h.img([
-        attr.src("/dachshund-mascot.svg"),
+        attr.src("./dachshund-mascot.svg"),
         attr.alt("Dachshund mascot"),
         attr.class("mascot"),
       ]),
@@ -322,7 +322,7 @@ fn hero_section(model: Model) -> Element(Msg) {
           ],
           [
             h.img([
-              attr.src("/chatbubble.svg"),
+              attr.src("./chatbubble.svg"),
               attr.alt("Chat bubble"),
               attr.class("chat-bubble-img"),
             ]),
@@ -539,7 +539,7 @@ fn step_card(
   title: Element(Msg),
   desc: Element(Msg),
 ) -> Element(Msg) {
-  let step_svg = "/step" <> int.to_string(num) <> ".svg"
+  let step_svg = "./step" <> int.to_string(num) <> ".svg"
   h.div([attr.class("flex gap-4 items-center")], [
     h.img([
       attr.src(step_svg),
