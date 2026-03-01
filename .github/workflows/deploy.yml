@@ -1,0 +1,64 @@
+name: Deploy Demo to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'examples/dachshund_app/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Erlang/OTP
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: "27.0"
+          gleam-version: "1.14.0"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install Gleam dependencies
+        run: cd examples/dachshund_app && gleam deps download
+
+      - name: Build demo app
+        run: cd examples/dachshund_app && gleam run -m lustre/dev build --minify --outdir=public
+
+      - name: Fix paths for GitHub Pages
+        run: |
+          cd examples/dachshund_app/public
+          sed -i 's|href="/dachshund_app.css"|href="./dachshund_app.css"|g' index.html
+          sed -i 's|src="/dachshund_app.js"|src="./dachshund_app.js"|g' index.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./examples/dachshund_app/public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

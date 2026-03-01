@@ -1,5 +1,8 @@
 ![Dachshund Mascot](https://raw.githubusercontent.com/AQ/dachshund/main/assets/mascot-sit.svg)
 
+> [!NOTE]
+> This repository is still Alpha, expect breaking changes and incomplete features.
+
 # Dachshund
 
 **A Gleam i18n library inspired by Paraglide — Translations as Code**
