@@ -5,7 +5,7 @@ gleam = ">= 1.11.0"
 target = "javascript"
 
 licences = ["MIT"]
-repository = { type = "github", user = "AQ", repo = "dachshund" }
+repository = { type = "github", user = "tantalumv", repo = "Dachshund" }
 
 [dependencies]
 gleam_stdlib = ">= 0.45.0 and < 2.0.0"

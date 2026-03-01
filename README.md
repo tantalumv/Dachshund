@@ -1,4 +1,4 @@
-![Dachshund Mascot](https://raw.githubusercontent.com/AQ/dachshund/main/assets/mascot-sit.svg)
+![Dachshund Mascot](https://raw.githubusercontent.com/tantalumv/Dachshund/main/assets/mascot-sit.svg)
 
 > [!NOTE]
 > This repository is still Alpha, expect breaking changes and incomplete features.
