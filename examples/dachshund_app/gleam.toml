@@ -1,0 +1,24 @@
+name = "dachshund_app"
+version = "0.1.0"
+description = "Example app demonstrating dachshund i18n with Lustre"
+gleam = ">= 1.11.0"
+target = "javascript"
+
+[dependencies]
+gleam_stdlib = ">= 0.45.0 and < 2.0.0"
+lustre = ">= 5.0.0 and < 6.0.0"
+dachshund = ">= 0.1.0 and < 1.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
+lustre_dev_tools = ">= 2.3.4 and < 3.0.0"
+
+[javascript]
+runtime = "bun"
+
+[tools.lustre.html]
+title = "Dachshund i18n Demo"
+stylesheets = [{ href = "/dachshund_app.css" }]
+
+[tools.lustre.dev]
+port = 4002

@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+priv/
+
+# Dependencies
+_deps/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Gleam
+manifest.toml
+
+# Test artifacts
+test-results/
+sync-from-dev.sh

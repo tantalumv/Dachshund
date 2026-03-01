@@ -1,0 +1,949 @@
+/* Dachshund App Styles - Warm Earthy Theme */
+
+/* Caprasimo - Decorative font for Latin (loaded from Google Fonts CDN) */
+@import url("https://fonts.googleapis.com/css2?family=Caprasimo&display=swap");
+
+/* Lalezar - Arabic font for headings ONLY */
+@font-face {
+  font-family: "Lalezar";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./lalezar-arabic-400-normal.woff) format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+/* WDXL Lubrifont SC - Chinese font (loaded from Google Fonts CDN when hosted) */
+/* Noto Sans SC added as fallback for characters not covered by WDXL Lubrifont SC */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=WDXL+Lubrifont+SC&display=swap");
+
+:root {
+  --background: #fdfbf7;
+  --foreground: #4a3b33;
+  --card: #f8f4ee;
+  --card-foreground: #4a3b33;
+  --primary: #b45309;
+  --primary-foreground: #ffffff;
+  --secondary: #e4c090;
+  --secondary-foreground: #57534e;
+  --muted: #f1e9da;
+  --muted-foreground: #78716c;
+  --accent: #f2daba;
+  --accent-foreground: #57534e;
+  --border: #e4d9bc;
+  --input: #e4d9bc;
+  --ring: #b45309;
+  --shadow: 0px 2px 3px 0px hsl(28 18% 25% / 0.18);
+  --radius: 0.3rem;
+}
+
+.dark {
+  --background: #1c1917;
+  --foreground: #f5f5f4;
+  --card: #292524;
+  --card-foreground: #f5f5f4;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+  --secondary: #57534e;
+  --secondary-foreground: #e7e5e4;
+  --muted: #201d1a;
+  --muted-foreground: #a8a29e;
+  --accent: #1f3b3d;
+  --accent-foreground: #e7e5e4;
+  --border: #44403c;
+  --input: #44403c;
+  --ring: #f97316;
+  --shadow: 0px 2px 3px 0px hsl(0 0% 5% / 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Apply background to html for full viewport coverage */
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family:
+    "Caprasimo",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Noto Sans",
+    Ubuntu,
+    Cantarell,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  letter-spacing: 0.03em;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-color: transparent; /* Let html background show through */
+  overflow-x: hidden;
+}
+
+/* Chinese uses WDXL Lubrifont SC for everything */
+[lang="zh"] body {
+  font-family: "WDXL Lubrifont SC", "Noto Sans SC", "Source Han Sans SC", sans-serif !important;
+}
+
+/* Arabic uses system fonts for body, Lalezar for headings */
+[lang="ar"] body {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Noto Sans",
+    sans-serif;
+}
+
+/* Hebrew uses system fonts for everything */
+[lang="he"] body {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Noto Sans",
+    sans-serif;
+}
+
+/* Decorative heading font for Features, How It Works, Live Detector */
+.decorative-heading {
+  font-family: "Caprasimo", "WDXL Lubrifont SC", cursive, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Arabic headings use Lalezar */
+[lang="ar"] .decorative-heading {
+  font-family: "Lalezar", cursive, sans-serif;
+}
+
+/* Chinese headings use WDXL Lubrifont SC (already applied to body, but explicit) */
+[lang="zh"] .decorative-heading {
+  font-family: "WDXL Lubrifont SC", "Noto Sans SC", "Source Han Sans SC", sans-serif !important;
+}
+
+/* Page wrapper - constrains all content to max-width */
+.page-wrapper {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Main content area */
+.main-content {
+  width: 100%;
+  max-width: 860px;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Layout utilities */
+.min-h-screen {
+  min-height: 100vh;
+}
+.bg-background {
+  background-color: var(--background);
+}
+.bg-card {
+  background-color: var(--card);
+}
+.text-foreground {
+  color: var(--foreground);
+}
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.flex-1 {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .gap-4 {
+    gap: 0.75rem;
+  }
+
+  /* Responsive padding for smaller screens */
+  body {
+    padding: 0;
+  }
+
+  .page-wrapper {
+    padding: 0 1rem;
+  }
+
+  .main-content {
+    padding: 1.5rem 0;
+  }
+}
+
+/* Spacing */
+.mb-16 {
+  margin-bottom: 4rem;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.p-2 {
+  padding: 0.5rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Typography */
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.text-center {
+  text-align: center;
+}
+
+/* Borders & Shadows */
+.border {
+  border-width: 1px;
+}
+.border-b {
+  border-bottom-width: 1px;
+}
+.rounded {
+  border-radius: var(--radius);
+}
+.rounded-md {
+  border-radius: calc(var(--radius) + 0.125rem);
+}
+.rounded-lg {
+  border-radius: calc(var(--radius) + 0.25rem);
+}
+.shadow-sm {
+  box-shadow: var(--shadow);
+}
+.shadow-lg {
+  box-shadow: 0px 4px 6px -1px hsl(28 18% 25% / 0.18);
+}
+
+/* Colors */
+.bg-primary {
+  background-color: var(--primary);
+}
+.text-primary {
+  color: var(--primary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+.bg-muted {
+  background-color: var(--muted);
+}
+.text-primary-foreground {
+  color: var(--primary-foreground);
+}
+.text-secondary-foreground {
+  color: var(--secondary-foreground);
+}
+
+/* Borders */
+.border-border {
+  border-color: var(--border);
+}
+
+/* Focus ring */
+.focus-outline-none:focus {
+  outline: none;
+}
+.focus-ring-2:focus {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+/* Hover states */
+.hover-bg-accent:hover {
+  background-color: var(--accent);
+}
+.hover-bg-muted:hover {
+  background-color: var(--muted);
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Positioning */
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.z-50 {
+  z-index: 50;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Dachshund mascot - larger hero asset */
+.mascot {
+  width: auto;
+  height: clamp(250px, 50vw, 350px);
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Speech bubble wrapper - positions bubble to RIGHT of mascot, aligned with head/mouth */
+.speech-bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-left: -40px;
+  margin-top: -60px;
+  align-self: flex-start;
+}
+
+/* Chat bubble container - stacks bubble and text together */
+.chat-bubble-container {
+  display: grid;
+  place-items: center;
+  width: clamp(130px, 28vw, 180px);
+  height: clamp(130px, 28vw, 180px);
+}
+
+/* Chat bubble image */
+.chat-bubble-img {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Chat bubble should be white/light in dark mode */
+html.dark .chat-bubble-img {
+  filter: invert(1);
+}
+
+/* Text inside chat bubble */
+.chat-bubble-text {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: clamp(11px, 2.2vw, 15px);
+  font-weight: 400;
+  color: var(--foreground);
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  text-align: center;
+  padding: 0.6rem;
+}
+
+/* Chat bubble with decorative heading font (Latin) */
+.chat-bubble-text.decorative-heading {
+  font-family: "Caprasimo", cursive, sans-serif;
+  font-weight: 400;
+}
+
+/* Arabic chat bubble uses Lalezar */
+[lang="ar"] .chat-bubble-text {
+  font-family: "Lalezar", cursive, sans-serif;
+}
+
+/* Chinese chat bubble uses WDXL Lubrifont SC */
+[lang="zh"] .chat-bubble-text {
+  font-family: "WDXL Lubrifont SC", "Noto Sans SC", sans-serif !important;
+}
+
+/* Hero section layout - mascot + bubble column side by side, NO wrapping */
+.hero-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
+/* Marquee infinite scroll carousel */
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.marquee-container::before,
+.marquee-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, var(--background), transparent);
+}
+
+.marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, var(--background), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 4rem;
+  animation: marquee-scroll 20s linear infinite;
+  width: max-content;
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-text {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--foreground);
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+  font-family: "Caprasimo", cursive, sans-serif !important;
+  text-transform: uppercase;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Arabic marquee uses Lalezar */
+[lang="ar"] .marquee-text {
+  font-family: "Lalezar", cursive, sans-serif !important;
+  text-transform: none;
+}
+
+/* Chinese marquee uses WDXL Lubrifont SC */
+[lang="zh"] .marquee-text {
+  font-family: "WDXL Lubrifont SC", "Noto Sans SC", sans-serif !important;
+}
+
+/* Hebrew marquee uses system fonts */
+[lang="he"] .marquee-text {
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive: scale down only on very small screens */
+@media (max-width: 350px) {
+  .mascot {
+    height: clamp(120px, 35vw, 200px);
+  }
+
+  .speech-bubble-wrapper {
+    margin-left: -15px;
+    margin-top: -35px;
+  }
+
+  .chat-bubble-container {
+    width: clamp(75px, 18vw, 110px);
+    height: clamp(75px, 18vw, 110px);
+  }
+
+  .chat-bubble-text {
+    font-size: clamp(7px, 1.6vw, 11px);
+  }
+
+  .custom-select-container {
+    max-width: 100px;
+  }
+
+  .custom-select-trigger {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.45rem;
+  }
+}
+
+/* Dark mode toggle button - ghost style */
+.dark-mode-toggle {
+  padding: 0.5rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  width: 2rem;
+  height: 2rem;
+}
+
+.dark-mode-toggle:hover {
+  background-color: var(--accent);
+}
+
+.dark-mode-toggle .dark-mode-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Sun icon should be white/light in dark mode */
+html.dark .dark-mode-toggle .dark-mode-icon {
+  filter: invert(1);
+}
+
+/* Sticky header - contains language selector and dark mode toggle */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: transparent;
+  pointer-events: none; /* Let clicks pass through empty areas */
+}
+
+.sticky-header > * {
+  pointer-events: auto; /* Re-enable clicks on children */
+}
+
+/* Custom Select (Language Picker) */
+.custom-select-container {
+  position: relative; /* Anchor dropdown to this container */
+  width: auto;
+  min-width: 120px;
+  max-width: 140px;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.custom-select-trigger:hover {
+  background-color: var(--accent);
+}
+
+.custom-select-trigger:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  z-index: 50;
+  min-width: 100%;
+  width: fit-content;
+  margin-top: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--card);
+  box-shadow: var(--shadow-lg);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.custom-select-option {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.custom-select-option:hover {
+  background-color: var(--accent);
+}
+
+.custom-select-option.highlighted {
+  background-color: var(--accent);
+}
+
+.custom-select-option.selected {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Grid layout for features */
+.grid {
+  display: grid;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Feature cards */
+.feature-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feature-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 640px) {
+  .feature-card {
+    padding: 1rem;
+  }
+}
+
+/* Code block */
+.code-block {
+  background-color: #1f2937;
+  color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family:
+    "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Code example wrapper in How It Works section */
+.code-example-wrapper {
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .code-example-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: var(--card);
+  color: var(--muted-foreground);
+  padding: 2rem 1.5rem;
+  margin-top: auto;
+  width: 100%;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* RTL Support */
+/* Note: Hero section is excluded from RTL toggling - mascot layout stays LTR */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Hero section stays LTR even in RTL mode */
+[dir="rtl"] .hero-layout {
+  direction: ltr;
+}
+
+[dir="rtl"] .marquee-container {
+  direction: rtl;
+}
+
+[dir="rtl"] .custom-select-trigger {
+  justify-content: center;
+}
+
+[dir="rtl"] .speech-bubble-wrapper {
+  margin-left: 0;
+  margin-right: -40px;
+}
+
+[dir="rtl"] .step-card {
+  direction: rtl;
+}
+
+/* Step card responsive */
+@media (max-width: 640px) {
+  .flex.gap-4 {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Live Detector Component */
+.live-detector {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 860px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .live-detector {
+    padding: 1rem;
+    max-width: 100%;
+  }
+}
+
+.live-detector-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Content card wrapper - for Features and How It Works sections */
+.content-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Features card - no top margin since it's first card after hero */
+.features-card {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .content-card {
+    padding: 1.25rem;
+  }
+}
+
+.content-card-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.content-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .content-card {
+    padding: 1.25rem;
+  }
+}
+
+.live-detector-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detector-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detector-label {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.detector-value {
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.detector-hint {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Step number SVG - uses muted colors, reacts to dark mode */
+.step-number-svg {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  filter: invert(0);
+  transition: filter 0.3s;
+}
+
+html.dark .step-number-svg {
+  filter: invert(1);
+}
+
+@media (max-width: 640px) {
+  .detector-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .live-detector {
+    padding: 1rem;
+  }
+}

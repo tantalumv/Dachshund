@@ -1,0 +1,9 @@
+{
+  "name": "dachshund-app",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "gleam run -m lustre/dev start",
+    "build": "gleam run -m lustre/dev build --minify --outdir=public"
+  }
+}
