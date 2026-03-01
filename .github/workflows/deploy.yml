@@ -29,6 +29,12 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Install rebar3
+        run: |
+          wget https://github.com/erlang/rebar3/releases/latest/download/rebar3
+          chmod +x rebar3
+          sudo mv rebar3 /usr/local/bin/
+
       - name: Install Gleam dependencies
         run: cd examples/dachshund_app && gleam deps download
 
