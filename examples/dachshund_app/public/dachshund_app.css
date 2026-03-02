@@ -427,8 +427,8 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-left: -20px;
-  margin-top: -40px;
+  margin-left: -10px;
+  margin-top: -30px;
   align-self: flex-start;
 }
 
@@ -494,7 +494,8 @@ html.dark .chat-bubble-img {
   max-width: 100%;
   margin-top: 2rem;
   margin-bottom: 0;
-  overflow: hidden;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 640px) {
@@ -506,8 +507,8 @@ html.dark .chat-bubble-img {
   }
 
   .speech-bubble-wrapper {
-    margin-left: -10px;
-    margin-top: -20px;
+    margin-left: -5px;
+    margin-top: -15px;
     align-self: flex-start;
   }
 
@@ -614,6 +615,7 @@ html.dark .chat-bubble-img {
     align-items: flex-start;
     justify-content: center;
     gap: 0.25rem;
+    padding: 0 10px;
   }
 
   .mascot {
@@ -621,9 +623,14 @@ html.dark .chat-bubble-img {
   }
 
   .speech-bubble-wrapper {
-    margin-left: -5px;
-    margin-top: -15px;
+    margin-left: 0;
+    margin-top: -10px;
     align-self: flex-start;
+  }
+
+  [dir="rtl"] .speech-bubble-wrapper {
+    margin-left: 5px;
+    margin-right: 0;
   }
 
   .chat-bubble-container {
@@ -885,12 +892,13 @@ html.dark .dark-mode-toggle .dark-mode-icon {
 }
 
 [dir="rtl"] .speech-bubble-wrapper {
-  margin-left: 0;
-  margin-right: -20px;
+  margin-left: 10px;
+  margin-right: 0;
 }
 
 @media (max-width: 640px) {
   [dir="rtl"] .speech-bubble-wrapper {
+    margin-left: 5px;
     margin-right: 0;
   }
 }
