@@ -1,5 +1,5 @@
 name = "dachshund"
-version = "0.1.0"
+version = "0.1.1"
 description = "Translations as code - Gleam i18n inspired by Paraglide"
 gleam = ">= 1.11.0"
 

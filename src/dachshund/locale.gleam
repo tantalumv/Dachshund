@@ -1,6 +1,33 @@
+//// Dachshund provides internationalization (i18n) for Gleam web applications.
+//// It offers locale detection, translation management, and RTL support.
+////
+//// ## Quick Start
+////
+//// ```gleam
+//// import dachshund/locale
+////
+//// // Get the string code for a locale
+//// locale.to_string(locale.En)  // -> "en"
+////
+//// // Parse a locale from a string
+//// locale.from_string("de")  // -> Ok(De)
+////
+//// // Check text direction for RTL languages
+//// locale.text_direction(locale.Ar)  // -> "rtl"
+//// ```
+////
+//// ## Usage with Strategies
+////
+//// Dachshund uses strategies to detect the user's preferred locale.
+//// See [`dachshund/strategy`](./strategy.html) for more details.
+
 import gleam/list
 import gleam/string
 
+/// A supported locale code.
+///
+/// Use these to define which languages your app supports.
+/// Each variant corresponds to an ISO 639-1 language code.
 pub type Locale {
   En
   De
@@ -45,10 +72,33 @@ pub type Locale {
   Lt
 }
 
+/// A language with its locale code and human-readable display name.
+///
+/// ## Example
+///
+/// ```gleam
+/// Language(En, "en", "English")
+/// ```
 pub type Language {
   Language(Locale, String, String)
 }
 
+/// All supported languages with their codes and display names.
+///
+/// Use this to build language selector UIs:
+///
+/// ```gleam
+/// import dachshund/locale
+///
+/// fn language_options() {
+///   locale.languages
+///   |> list.map(fn(lang) {
+///     case lang {
+///       Language(_, code, name) -> #(code, name)
+///     }
+///   })
+/// }
+/// ```
 pub const languages: List(Language) = [
   Language(En, "en", "English"),
   Language(De, "de", "German"),
@@ -89,8 +139,30 @@ pub const languages: List(Language) = [
   Language(Lt, "lt", "Lithuanian"),
 ]
 
+/// Locales that use right-to-left text direction.
+///
+/// Use with [`text_direction`](#text_direction) to determine
+/// which direction to render text.
+///
+/// ## Example
+///
+/// ```gleam
+/// import dachshund/locale
+///
+/// fn get_html_dir(lang: locale.Locale) {
+///   locale.text_direction(lang)  // returns "ltr" or "rtl"
+/// }
+/// ```
 pub const rtl_locales: List(Locale) = [Ar, He, Fa, Ur, Yi, Ps]
 
+/// Convert a Locale to its ISO 639-1 string code.
+///
+/// ## Examples
+///
+/// ```gleam
+/// locale.to_string(locale.En)  // -> "en"
+/// locale.to_string(locale.Ja)  // -> "ja"
+/// ```
 pub fn to_string(locale: Locale) -> String {
   case locale {
     En -> "en"
@@ -137,6 +209,17 @@ pub fn to_string(locale: Locale) -> String {
   }
 }
 
+/// Parse a Locale from a string code.
+///
+/// Returns `Error(Nil)` if the string is not a supported locale.
+///
+/// ## Examples
+///
+/// ```gleam
+/// locale.from_string("en")    // -> Ok(En)
+/// locale.from_string("fr")    // -> Ok(Fr)
+/// locale.from_string("xyz")   // -> Error(Nil)
+/// ```
 pub fn from_string(s: String) -> Result(Locale, Nil) {
   case s {
     "en" -> Ok(En)
@@ -184,6 +267,19 @@ pub fn from_string(s: String) -> Result(Locale, Nil) {
   }
 }
 
+/// Parse a Locale from a string, handling locale codes with region subtags.
+///
+/// This is useful for parsing browser `navigator.languages` which may
+/// include codes like `"en-US"` or `"zh-CN"`.
+///
+/// ## Examples
+///
+/// ```gleam
+/// locale.from_string_loose("en")     // -> Ok(En)
+/// locale.from_string_loose("en-US")  // -> Ok(En)
+/// locale.from_string_loose("zh-CN")  // -> Ok(Zh)
+/// locale.from_string_loose("invalid") // -> Error(Nil)
+/// ```
 pub fn from_string_loose(s: String) -> Result(Locale, Nil) {
   case string.length(s) {
     2 -> from_string(s)
@@ -196,6 +292,14 @@ pub fn from_string_loose(s: String) -> Result(Locale, Nil) {
   }
 }
 
+/// Parse a Locale from a string, returning a default if invalid.
+///
+/// ## Examples
+///
+/// ```gleam
+/// locale.from_string_or_default("de")   // -> De
+/// locale.from_string_or_default("xyz") // -> En (default)
+/// ```
 pub fn from_string_or_default(s: String) -> Locale {
   case from_string(s) {
     Ok(locale) -> locale
@@ -203,6 +307,14 @@ pub fn from_string_or_default(s: String) -> Locale {
   }
 }
 
+/// Parse a Locale from a string with region subtag, returning a default if invalid.
+///
+/// ## Examples
+///
+/// ```gleam
+/// locale.from_string_loose_or_default("fr-CA") // -> Fr
+/// locale.from_string_loose_or_default("xyz")   // -> En (default)
+/// ```
 pub fn from_string_loose_or_default(s: String) -> Locale {
   case from_string_loose(s) {
     Ok(locale) -> locale
@@ -210,6 +322,17 @@ pub fn from_string_loose_or_default(s: String) -> Locale {
   }
 }
 
+/// Get the text direction for a locale.
+///
+/// Returns `"rtl"` for right-to-left languages (Arabic, Hebrew, etc.)
+/// and `"ltr"` for left-to-right languages.
+///
+/// ## Example
+///
+/// ```gleam
+/// locale.text_direction(locale.En)  // -> "ltr"
+/// locale.text_direction(locale.Ar)  // -> "rtl"
+/// ```
 pub fn text_direction(locale: Locale) -> String {
   case list.contains(rtl_locales, locale) {
     True -> "rtl"
@@ -217,6 +340,18 @@ pub fn text_direction(locale: Locale) -> String {
   }
 }
 
+/// Get the text direction from a locale string.
+///
+/// Convenience function that combines [`from_string`](#from_string)
+/// and [`text_direction`](#text_direction).
+///
+/// ## Example
+///
+/// ```gleam
+/// locale.text_direction_from_string("he")  // -> "rtl"
+/// locale.text_direction_from_string("es")  // -> "ltr"
+/// locale.text_direction_from_string("??")  // -> "ltr" (invalid returns default)
+/// ```
 pub fn text_direction_from_string(s: String) -> String {
   case from_string(s) {
     Ok(locale) -> text_direction(locale)
