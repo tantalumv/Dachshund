@@ -92,13 +92,28 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   background-color: transparent; /* Let html background show through */
   overflow-x: hidden;
+}
+
+/* App container - main wrapper */
+.app-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Content wrapper - handles dir/lang attributes */
+.content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Chinese uses WDXL Lubrifont SC for everything */
@@ -247,6 +262,9 @@ body {
 .mt-auto {
   margin-top: auto;
 }
+.mt-0 {
+  margin-top: 0;
+}
 .p-2 {
   padding: 0.5rem;
 }
@@ -279,6 +297,10 @@ body {
 }
 
 /* Typography */
+.text-3xl {
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -393,7 +415,8 @@ body {
 /* Dachshund mascot - larger hero asset */
 .mascot {
   width: auto;
-  height: clamp(250px, 50vw, 350px);
+  max-width: 100%;
+  height: clamp(200px, 45vw, 350px);
   flex-shrink: 0;
   display: block;
 }
@@ -404,8 +427,8 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-left: -40px;
-  margin-top: -60px;
+  margin-left: -20px;
+  margin-top: -40px;
   align-self: flex-start;
 }
 
@@ -468,8 +491,39 @@ html.dark .chat-bubble-img {
   justify-content: center;
   gap: 0;
   width: 100%;
+  max-width: 100%;
   margin-top: 2rem;
   margin-bottom: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .hero-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .speech-bubble-wrapper {
+    margin-left: -10px;
+    margin-top: -20px;
+    align-self: flex-start;
+  }
+
+  .mascot {
+    height: clamp(150px, 40vw, 200px);
+  }
+
+  .chat-bubble-container {
+    width: clamp(100px, 22vw, 140px);
+    height: clamp(100px, 22vw, 140px);
+  }
+
+  .chat-bubble-text {
+    font-size: clamp(9px, 1.8vw, 12px);
+    padding: 0.4rem;
+  }
 }
 
 /* Marquee infinite scroll carousel */
@@ -555,22 +609,31 @@ html.dark .chat-bubble-img {
 
 /* Responsive: scale down only on very small screens */
 @media (max-width: 350px) {
+  .hero-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
   .mascot {
-    height: clamp(120px, 35vw, 200px);
+    height: clamp(120px, 35vw, 160px);
   }
 
   .speech-bubble-wrapper {
-    margin-left: -15px;
-    margin-top: -35px;
+    margin-left: -5px;
+    margin-top: -15px;
+    align-self: flex-start;
   }
 
   .chat-bubble-container {
-    width: clamp(75px, 18vw, 110px);
-    height: clamp(75px, 18vw, 110px);
+    width: clamp(80px, 20vw, 110px);
+    height: clamp(80px, 20vw, 110px);
   }
 
   .chat-bubble-text {
-    font-size: clamp(7px, 1.6vw, 11px);
+    font-size: clamp(8px, 1.5vw, 10px);
+    padding: 0.3rem;
   }
 
   .custom-select-container {
@@ -764,6 +827,22 @@ html.dark .dark-mode-toggle .dark-mode-icon {
     margin-right: 0;
     width: 100%;
   }
+
+  .code-block {
+    padding: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-block {
+    padding: 0.75rem;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
 }
 
 /* Footer */
@@ -775,12 +854,14 @@ html.dark .dark-mode-toggle .dark-mode-icon {
   width: 100%;
   border-top: 1px solid var(--border);
   box-sizing: border-box;
+  text-align: center;
 }
 
 @media (max-width: 640px) {
   .footer {
     padding: 1.5rem 1rem;
   }
+}
 }
 
 /* RTL Support */
@@ -805,7 +886,13 @@ html.dark .dark-mode-toggle .dark-mode-icon {
 
 [dir="rtl"] .speech-bubble-wrapper {
   margin-left: 0;
-  margin-right: -40px;
+  margin-right: -20px;
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .speech-bubble-wrapper {
+    margin-right: 0;
+  }
 }
 
 [dir="rtl"] .step-card {
@@ -829,7 +916,6 @@ html.dark .dark-mode-toggle .dark-mode-icon {
   margin: 2rem 0;
   box-shadow: var(--shadow);
   width: 100%;
-  max-width: 860px;
   box-sizing: border-box;
 }
 
@@ -857,12 +943,12 @@ html.dark .dark-mode-toggle .dark-mode-icon {
   margin: 2rem 0;
   box-shadow: var(--shadow);
   width: 100%;
-  max-width: 100%;
+  max-width: min(860px, 100%);
   box-sizing: border-box;
 }
 
 /* Features card - no top margin since it's first card after hero */
-.features-card {
+.content-card.features-card {
   margin-top: 0;
 }
 
@@ -873,7 +959,7 @@ html.dark .dark-mode-toggle .dark-mode-icon {
 }
 
 .content-card-title {
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: 400;
   color: var(--foreground);
   margin-bottom: 1.5rem;
@@ -884,12 +970,6 @@ html.dark .dark-mode-toggle .dark-mode-icon {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .content-card {
-    padding: 1.25rem;
-  }
 }
 
 .live-detector-content {

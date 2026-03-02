@@ -152,7 +152,10 @@ pub fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       persist_dark_mode(new_mode)
       #(Model(..model, dark_mode: new_mode), none())
     }
-    ToggleSelect -> #(Model(..model, select_is_open: !model.select_is_open), none())
+    ToggleSelect -> #(
+      Model(..model, select_is_open: !model.select_is_open),
+      none(),
+    )
     SelectLocale(locale) -> {
       persist_locale(locale)
       #(Model(..model, locale: locale, select_is_open: False), none())
@@ -168,16 +171,25 @@ pub fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
 pub fn view(model: Model) -> Element(Msg) {
   let dir = text_direction(model.locale)
   let lang = locale_to_lang_attr(model.locale)
-  h.div([attr.attribute("dir", dir), attr.attribute("lang", lang)], [
-    h.div([attr.class("sticky-header")], [
-      language_select(model),
-      dark_mode_toggle(model),
-    ]),
-    h.div([attr.class("page-wrapper")], [
-      main_content(model),
-      how_it_works_section(model.locale),
-    ]),
-    live_detector(model),
+  h.div([attr.class("app-container")], [
+    h.div(
+      [
+        attr.attribute("dir", dir),
+        attr.attribute("lang", lang),
+        attr.class("content-wrapper"),
+      ],
+      [
+        h.div([attr.class("sticky-header")], [
+          language_select(model),
+          dark_mode_toggle(model),
+        ]),
+        h.div([attr.class("page-wrapper")], [
+          main_content(model),
+          how_it_works_section(model.locale),
+          live_detector(model),
+        ]),
+      ],
+    ),
     footer(model),
   ])
 }
@@ -267,18 +279,19 @@ fn language_select(model: Model) -> Element(Msg) {
       ),
       // Dropdown options
       case model.select_is_open {
-        True -> h.div(
-          [
-            attr.class("custom-select-dropdown"),
-          ],
-          [
-            select_option(En, "English", model),
-            select_option(De, "Deutsch", model),
-            select_option(Zh, "中文", model),
-            select_option(Ar, "العربية", model),
-            select_option(He, "עברית", model),
-          ],
-        )
+        True ->
+          h.div(
+            [
+              attr.class("custom-select-dropdown"),
+            ],
+            [
+              select_option(En, "English", model),
+              select_option(De, "Deutsch", model),
+              select_option(Zh, "中文", model),
+              select_option(Ar, "العربية", model),
+              select_option(He, "עברית", model),
+            ],
+          )
         False -> text("")
       },
     ],
@@ -287,9 +300,13 @@ fn language_select(model: Model) -> Element(Msg) {
 
 fn select_option(locale: Locale, label: String, model: Model) -> Element(Msg) {
   let is_selected = locale == model.locale
-  let classes = "custom-select-option"
-    <> case is_selected { True -> " selected" False -> "" }
-  
+  let classes =
+    "custom-select-option"
+    <> case is_selected {
+      True -> " selected"
+      False -> ""
+    }
+
   h.div(
     [
       attr.class(classes),
@@ -342,7 +359,8 @@ fn hero_section(model: Model) -> Element(Msg) {
 fn subtitle(locale: Locale) -> Element(Msg) {
   let subtitle_text = case locale {
     En -> "A GLEAM I18N LIBRARY INSPIRED BY PARAGLIDE - TRANSLATIONS AS CODE"
-    De -> "EINE GLEAM I18N-BIBLIOTHEK INSPIRIERT VON PARAGLIDE - ÜBERSETZUNGEN ALS CODE"
+    De ->
+      "EINE GLEAM I18N-BIBLIOTHEK INSPIRIERT VON PARAGLIDE - ÜBERSETZUNGEN ALS CODE"
     Zh -> "受 PARAGLIDE 啟發的 GLEAM I18N 庫 - 翻譯即代碼"
     Ar -> "مكتبة GLEAM I18N مستوحاة من PARAGLIDE - الترجمات ككود"
     He -> "ספריית GLEAM I18N בהשראת PARAGLIDE - תרגומים כקוד"
@@ -361,15 +379,22 @@ fn subtitle(locale: Locale) -> Element(Msg) {
 fn features_section(locale: Locale) -> Element(Msg) {
   h.section([attr.class("mb-16")], [
     h.div([attr.class("content-card features-card")], [
-      h.h2([attr.class("text-2xl text-foreground mb-8 decorative-heading text-center")], [
-        case locale {
-          En -> text("Features")
-          De -> text("Funktionen")
-          Zh -> text("功能特点")
-          Ar -> text("الميزات")
-          He -> text("תכונות")
-        },
-      ]),
+      h.h2(
+        [
+          attr.class(
+            "text-3xl text-foreground mb-8 mt-0 decorative-heading text-center",
+          ),
+        ],
+        [
+          case locale {
+            En -> text("Features")
+            De -> text("Funktionen")
+            Zh -> text("功能特点")
+            Ar -> text("الميزات")
+            He -> text("תכונות")
+          },
+        ],
+      ),
       h.div([attr.class("grid grid-cols-1 md:grid-cols-3 gap-6")], [
         feature_card("🚀", title(locale, 1), desc(locale, 1)),
         feature_card("🎯", title(locale, 2), desc(locale, 2)),
@@ -442,27 +467,31 @@ fn feature_card(
   title: Element(Msg),
   desc: Element(Msg),
 ) -> Element(Msg) {
-  h.div(
-    [attr.class("feature-card")],
-    [
-      h.span([attr.class("text-2xl mb-4 block")], [text(emoji)]),
-      h.h3([attr.class("text-foreground mb-2")], [title]),
-      h.p([attr.class("text-muted-foreground")], [desc]),
-    ],
-  )
+  h.div([attr.class("feature-card")], [
+    h.span([attr.class("text-2xl mb-4 block")], [text(emoji)]),
+    h.h3([attr.class("text-foreground mb-2")], [title]),
+    h.p([attr.class("text-muted-foreground")], [desc]),
+  ])
 }
 
 fn how_it_works_section(locale: Locale) -> Element(Msg) {
   h.section([attr.class("mb-16")], [
-    h.h2([attr.class("text-2xl text-foreground mb-8 decorative-heading text-center")], [
-      case locale {
-        En -> text("How It Works")
-        De -> text("So funktioniert es")
-        Zh -> text("工作原理")
-        Ar -> text("كيف يعمل")
-        He -> text("איך זה עובד")
-      },
-    ]),
+    h.h2(
+      [
+        attr.class(
+          "text-3xl text-foreground mb-8 decorative-heading text-center",
+        ),
+      ],
+      [
+        case locale {
+          En -> text("How It Works")
+          De -> text("So funktioniert es")
+          Zh -> text("工作原理")
+          Ar -> text("كيف يعمل")
+          He -> text("איך זה עובד")
+        },
+      ],
+    ),
     h.div([attr.class("content-card")], [
       h.div([attr.class("content-card-content")], [
         step_card(1, step_title(locale, 1), step_desc(locale, 1)),
@@ -534,11 +563,7 @@ fn step_desc(locale: Locale, n: Int) -> Element(Msg) {
   }
 }
 
-fn step_card(
-  num: Int,
-  title: Element(Msg),
-  desc: Element(Msg),
-) -> Element(Msg) {
+fn step_card(num: Int, title: Element(Msg), desc: Element(Msg)) -> Element(Msg) {
   let step_svg = "./step" <> int.to_string(num) <> ".svg"
   h.div([attr.class("flex gap-4 items-center")], [
     h.img([
@@ -771,8 +796,10 @@ fn live_detector(model: Model) -> Element(Msg) {
       ]),
       h.p([attr.class("detector-hint")], [
         text(case model.locale {
-          En -> "Change language or clear localStorage to see different detection results."
-          De -> "Sprache ändern oder localStorage löschen, um andere Erkennungsergebnisse zu sehen."
+          En ->
+            "Change language or clear localStorage to see different detection results."
+          De ->
+            "Sprache ändern oder localStorage löschen, um andere Erkennungsergebnisse zu sehen."
           Zh -> "更改语言或清除 localStorage 以查看不同的检测结果。"
           Ar -> "غيّر اللغة أو امسح localStorage لرؤية نتائج اكتشاف مختلفة."
           He -> "שנה שפה או נקה localStorage כדי לראות תוצאות זיהוי שונות."
