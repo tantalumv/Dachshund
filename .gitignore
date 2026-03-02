@@ -23,3 +23,6 @@ manifest.toml
 # Test artifacts
 test-results/
 sync-from-dev.sh
+
+# Lustre dev server binaries
+.lustre/bin/
